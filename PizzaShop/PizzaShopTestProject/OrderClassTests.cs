@@ -13,7 +13,7 @@ namespace PizzaShopTestProject
         {
             Order sut = new Order();
 
-            bool actual = (sut.pizzas == null);
+            bool actual = (sut.pizzas.Count == 0);
 
             Assert.True(actual);
         }
