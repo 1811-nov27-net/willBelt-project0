@@ -6,7 +6,7 @@ namespace PizzaShopUserInterface
     public class Order
     {
         public User customer { get; set; }
-        public List<Pizza> pizzas { get; set; }
+        public List<Pizza> pizzas = new List<Pizza>();
         public DateTime time { get; set; }
         public double total { get; set; }
 
