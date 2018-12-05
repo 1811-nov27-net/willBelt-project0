@@ -45,6 +45,7 @@ namespace PizzaShopUserInterface
                     OrderCompleted = true;
 
             } while (!OrderCompleted);
+            newOrder.time = DateTime.Now;
             OrderHistory.Add(newOrder);
         }
 
