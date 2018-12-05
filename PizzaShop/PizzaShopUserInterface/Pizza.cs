@@ -100,7 +100,7 @@ namespace PizzaShopUserInterface
             }
             if (noToppings)
                 toppingsString = "no toppings";
-            return ($"{sizes[size]} {crustTypes[crustSelection]} pizza with {toppingsString}");
+            return ($"{sizes[size]} {crustTypes[crustSelection]} pizza with {toppingsString}: ${price}");
         }
     }
 }

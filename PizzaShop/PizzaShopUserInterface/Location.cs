@@ -36,7 +36,9 @@ namespace PizzaShopUserInterface
                 isValidInput = false;
                 GetToppigsOrder();
                 CheckInventory();
-                newOrder.AddPizza(new Pizza(sizes, crustTypes, toppings, size, crust, toppingChoices));
+                Pizza newPizza = new Pizza(sizes, crustTypes, toppings, size, crust, toppingChoices);
+                Console.WriteLine(newOrder.AddPizza(newPizza));
+                Console.WriteLine($"Total: ${newOrder.total}");
                 Console.WriteLine("Would you like to order anything else? y/n");
                 input = Console.ReadLine();
                 if (input.ToLower() == "n" || input.ToLower() == "no")
