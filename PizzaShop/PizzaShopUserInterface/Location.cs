@@ -3,39 +3,46 @@ using System.Collections.Generic;
 
 namespace PizzaShopUserInterface
 {
-    internal class Location
+    public class Location
     {
         Dictionary<int, int> inventory = new Dictionary<int, int> { {0,50}, {1,50},{2,50},{3,50}, {4,50}, {5,50}, {6,50} };
         static Dictionary<int, string> sizes = new Dictionary<int, string> { { 0, "Small" }, { 1, "Medium" }, { 2, "Large" } };
         static Dictionary<int, string> crustTypes = new Dictionary<int, string> { { 0, "Hand-Tossed" }, { 1, "Deep-Dish" }, { 2, "Thin Crust" } };
         static Dictionary<int, string> toppings = new Dictionary<int, string> { { 0, "Pepperoni" }, { 1, "Canadian Bacon" }, { 2, "Sausage" }, { 3, "Mushrooms" }, { 4, "Black Olives" }, { 5, "Green Peppers" }, { 6, "Onions" } };
-        List<Order> OrderHistory = new List<Order>();
+        public List<Order> OrderHistory;
         List<string> OrderRequestStrings;
         private bool isValidInput = false;
         private string input;
-        private bool[] toppingChoices = new bool[toppings.Count];
-        private int size = 0, crust = 0;
-        private int inputIndex;
+        private bool[] toppingChoices;
+        private int size, crust, inputIndex;
+        Order newOrder;
+        public string LocationDescription;
 
-        public void TakeOrder()
+        public Location(string description, List<Order> history)
         {
-            BuildOrderRequestStrings();
-            GetSizeOrder();
-            isValidInput = false;
-            GetCrustOrder();
-            isValidInput = false;
-            GetToppigsOrder();
-            for (int i = 0; i < toppingChoices.Length; i++)
-            {
-                if (toppingChoices[i] && inventory[i] != 0)
-                {
-                    inventory[i]--;
-                }
-                else if (inventory[i] == 0)
-                    Console.WriteLine($"We cannot fulfill that order because we are out of {toppings[i]}");
-            }
-            Order newOrder = new Order();
-            newOrder.AddPizza(new Pizza(sizes, crustTypes, toppings, size, crust, toppingChoices));
+            LocationDescription = description;
+            OrderHistory = history;
+        }
+        public void TakeOrder(User user)
+        {
+            newOrder = new Order();
+            newOrder.customer = user;
+            bool OrderCompleted = false;
+            do {
+                BuildOrderRequestStrings();
+                GetSizeOrder();
+                isValidInput = false;
+                GetCrustOrder();
+                isValidInput = false;
+                GetToppigsOrder();
+                CheckInventory();
+                newOrder.AddPizza(new Pizza(sizes, crustTypes, toppings, size, crust, toppingChoices));
+                Console.WriteLine("Would you like to order anything else? y/n");
+                input = Console.ReadLine();
+                if (input.ToLower() == "n" || input.ToLower() == "no")
+                    OrderCompleted = true;
+
+            } while (!OrderCompleted);
             OrderHistory.Add(newOrder);
         }
 
@@ -52,7 +59,7 @@ namespace PizzaShopUserInterface
             {
                 OrderRequestStrings[1] += ($"{pair.Key+1}. {pair.Value}\n");
             }
-            OrderRequestStrings.Add("What toppings would you like(enter your selections one at a time, then enter -1 when done)?\n");
+            OrderRequestStrings.Add("What toppings would you like(enter your selections one at a time, then enter 'Done' when done)?\n");
             foreach(KeyValuePair<int,string> pair in toppings)
             {
                 OrderRequestStrings[2] += ($"{pair.Key+1}. {pair.Value}\n");
@@ -64,9 +71,9 @@ namespace PizzaShopUserInterface
             {
                 Console.Write(OrderRequestStrings[0]);
                 input = Console.ReadLine();
-                isValidInput = (input.Length == 1 && (sizes.ContainsKey((int)input[0])));
+                isValidInput = (int.TryParse(input, out int number) && (sizes.ContainsKey(number-1)));
                 if (isValidInput)
-                    size = (int)input[0];
+                    size = number - 1;
                 else
                     Console.WriteLine("Invalid entry, please enter the number of your selection");
             } while (!isValidInput);
@@ -77,40 +84,41 @@ namespace PizzaShopUserInterface
             {
                 Console.Write(OrderRequestStrings[1]);
                 input = Console.ReadLine();
-                isValidInput = (input.Length == 1 && (crustTypes.ContainsKey((int)input[0])));
+                isValidInput = (int.TryParse(input, out int number) && (crustTypes.ContainsKey(number-1)));
                 if (isValidInput)
-                    crust = (int)input[0];
+                    crust = number - 1;
                 else
                     Console.WriteLine("Invalid entry, please enter the number of your selection");
             } while (!isValidInput);
         }
         private void GetToppigsOrder()
         {
+            toppingChoices = new bool[toppings.Count];
+            bool done = false;
             do
             {
-                int temporary = 0;
-                inputIndex = 0;
                 Console.Write(OrderRequestStrings[2]);
                 input = Console.ReadLine();
-                if (input.Length == 1)
-                    inputIndex = input[0];
-                else if (input.Length > 1)
-                {
-                    for (int i = 0; i < input.Length; i++)
-                    {
-                        temporary = input[i];
-                        for (int j = (input.Length - 1) - i; j > 0; j--)
-                            temporary *= 10;
-                        inputIndex += temporary;
-                    }
-                }
-                isValidInput = inputIndex > -2 && toppings.ContainsKey(inputIndex);
-
+                isValidInput = (int.TryParse(input, out int number) && toppings.ContainsKey(number-1));
                 if (isValidInput)
-                    toppingChoices[inputIndex] = true;
+                    toppingChoices[number-1] = true;
+                else if (input.ToLower() == "done")
+                    done = true;
                 else
                     Console.WriteLine("Invalid entry, please enter the number of your selection");
-            } while (inputIndex != -1);
+            } while (!done);
+        }
+        private void CheckInventory()
+        {
+            for (int i = 0; i < toppingChoices.Length; i++)
+            {
+                if (toppingChoices[i] && inventory[i] != 0)
+                {
+                    inventory[i]--;
+                }
+                else if (inventory[i] == 0)
+                    Console.WriteLine($"We cannot fulfill that order because we are out of {toppings[i]}");
+            }
         }
     }
 }

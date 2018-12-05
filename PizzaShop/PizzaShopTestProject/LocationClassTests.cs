@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xunit;
 
 namespace PizzaShopTestProject
 {
-    class LocationClassTests
+    public class LocationClassTests
     {
+        [Fact]
+        public void TakeOrderCreatesValidOrder()
+        {
+
+        }
     }
 }
