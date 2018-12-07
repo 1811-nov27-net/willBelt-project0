@@ -48,7 +48,7 @@ namespace PizzaShopTestProject
                 { 6, "Onions" }
             };
             OrderClass sut = new OrderClass();
-            sut.AddPizza(new Pizza(sizes, crustTypes, toppings, size, crust, toppingChoices));
+            sut.AddPizza(new PizzaClass(sizes, crustTypes, toppings, size, crust, toppingChoices));
 
             double actual = sut.total;
 
@@ -86,8 +86,8 @@ namespace PizzaShopTestProject
             };
 
             OrderClass sut = new OrderClass();
-            sut.AddPizza(new Pizza(sizes, crustTypes, toppings, size, crust, toppingChoices));
-            sut.AddPizza(new Pizza(sizes, crustTypes, toppings, size, crust, toppingChoices));
+            sut.AddPizza(new PizzaClass(sizes, crustTypes, toppings, size, crust, toppingChoices));
+            sut.AddPizza(new PizzaClass(sizes, crustTypes, toppings, size, crust, toppingChoices));
 
             double actual = sut.total;
 

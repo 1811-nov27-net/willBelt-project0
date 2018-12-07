@@ -13,6 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PizzaShop.DataAccess\PizzaShop.DataAccess.csproj" />
+    <ProjectReference Include="..\PizzaShop.Library\PizzaShop.Library.csproj" />
     <ProjectReference Include="..\PizzaShopUserInterface\PizzaShopUserInterface.csproj" />
   </ItemGroup>
 

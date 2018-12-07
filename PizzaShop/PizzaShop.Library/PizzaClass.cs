@@ -20,7 +20,7 @@ namespace PizzaShopUserInterface
         /// <param name="chosenSize">selected size</param>
         /// <param name="crust">selected crust type</param>
         /// <param name="toppingChoices">desired toppings</param>
-        public Pizza(Dictionary<int, string> sizes, Dictionary<int, string> crustTypes, Dictionary<int, string> toppings, int chosenSize, int crust, bool[] toppingChoices)
+        public PizzaClass(Dictionary<int, string> sizes, Dictionary<int, string> crustTypes, Dictionary<int, string> toppings, int chosenSize, int crust, bool[] toppingChoices)
         {
             //import menu from location
             this.sizes = sizes;
