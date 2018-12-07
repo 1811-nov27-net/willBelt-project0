@@ -148,21 +148,34 @@ namespace PizzaShopUserInterface
         public string GetMenu()
         {
             string menuString = "";
+            bool firstLoop = true;
             foreach (KeyValuePair<int, string> pair in sizes)
             {
-                menuString += $"{pair.Value},";
+                if (!firstLoop)
+                    menuString += ",";
+                menuString += $"{pair.Value}";
+                if (firstLoop)
+                    firstLoop = false;
             }
             menuString += "/";
-
+            firstLoop = true;
             foreach (KeyValuePair<int, string> pair in crustTypes)
             {
-                menuString += $"{pair.Value},";
+                if (!firstLoop)
+                    menuString += ",";
+                menuString += $"{pair.Value}";
+                if (firstLoop)
+                    firstLoop = false;
             }
             menuString += "/";
-
+            firstLoop = true;
             foreach (KeyValuePair<int, string> pair in toppings)
             {
-                menuString += $"{pair.Value},";
+                if (!firstLoop)
+                    menuString += ",";
+                menuString += $"{pair.Value}";
+                if (firstLoop)
+                    firstLoop = false;
             }
             return menuString;
         }
@@ -170,9 +183,14 @@ namespace PizzaShopUserInterface
         public string GetInventory()
         {
             string inventoryString = "";
+            bool firstLoop = true;
             foreach ( KeyValuePair<int,int> pair in inventory)
             {
-                inventoryString += $"{pair.Value},";
+                if (!firstLoop)
+                    inventoryString += ",";
+                inventoryString += $"{pair.Value}";
+                if (firstLoop)
+                    firstLoop = false;
             }
             return inventoryString;
         }

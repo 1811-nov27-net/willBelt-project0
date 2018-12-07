@@ -41,9 +41,11 @@ namespace PizzaShop.DataAccess
             trackedOrder.UserId = db.Users.Find(order.customer.FirstName, order.customer.LastName).UserId;
             trackedOrder.LocationId = db.Locations.Find(order.location.LocationDescription).LocationId;
             trackedOrder.TotalCost = order.total;
+            bool firstLoop = true;
             foreach(var pizza in order.pizzas)
             {
-                trackedOrder.OrderDescription += "/";
+                if(!firstLoop)
+                    trackedOrder.OrderDescription += "/";
                 trackedOrder.OrderDescription += $"{pizza.size},{pizza.crustSelection},";
                 foreach(var topping in pizza.toppingSelection)
                 {
@@ -52,6 +54,8 @@ namespace PizzaShop.DataAccess
                     else
                         trackedOrder.OrderDescription += "0";
                 }
+                if (firstLoop)
+                    firstLoop = false;
             }
             trackedOrder.Time = order.time;
         }

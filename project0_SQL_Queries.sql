@@ -1,3 +1,5 @@
+CREATE DATABASE Projects;
+
 CREATE SCHEMA project0;
 
 CREATE TABLE project0.Orders
@@ -6,7 +8,7 @@ CREATE TABLE project0.Orders
 	UserID INT NOT NULL,
 	LocationID INT NOT NULL,
 	TotalCost MONEY NOT NULL CHECK(TotalCost < 500.00),
-	OrderDescription NVARCHAR NOT NULL,
+	OrderDescription NVARCHAR(MAX) NOT NULL,
 	Time DATETIME2 NOT NULL
 );
 
@@ -44,17 +46,17 @@ ALTER TABLE project0.Users
 ALTER TABLE project0.Users
 	DROP CONSTRAINT Fk_Users_DefaultLocation;
 
-ALTER TABLE project0.Locations
-	ADD Menu NVARCHAR(200) NOT NULL;
+--ALTER TABLE project0.Locations
+--	ADD Menu NVARCHAR(200) NOT NULL;
 
-ALTER TABLE project0.Locations
-	DROP COLUMN Menu;
+--ALTER TABLE project0.Locations
+--	DROP COLUMN Menu;
 
-ALTER TABLE project0.Locations
-	DROP COLUMN Inventory;
+--ALTER TABLE project0.Locations
+--	DROP COLUMN Inventory;
 
-ALTER TABLE project0.Locations
-	ADD Inventory NVARCHAR(100) NOT NULL;
+--ALTER TABLE project0.Locations
+--	ADD Inventory NVARCHAR(100) NOT NULL;
 
 
 INSERT INTO project0.Locations (LocationDescription, Menu, Inventory) VALUES
@@ -73,8 +75,8 @@ INSERT INTO project0.Users (FirstName, LastName, DefaultLocation) VALUES
 
 SELECT * FROM project0.Users;
 
-ALTER TABLE project0.Orders
-	DROP COLUMN OrderDescription;
+--ALTER TABLE project0.Orders
+--	DROP COLUMN OrderDescription;
 
-ALTER TABLE project0.Orders
-	ADD OrderDescription NVARCHAR(100) NOT NULL;
+--ALTER TABLE project0.Orders
+--	ADD OrderDescription NVARCHAR(100) NOT NULL;
