@@ -10,7 +10,7 @@ namespace PizzaShopUserInterface
         public int size { get; set; }
         public int crustSelection { get; set; }
         public bool[] toppingSelection = new bool[7];
-        public double price { get; set; }
+        public decimal price { get; set; }
         /// <summary>
         /// Pizza constructor
         /// </summary>
@@ -45,20 +45,20 @@ namespace PizzaShopUserInterface
         /// method that calculates the price of the individual pizza
         /// </summary>
         /// <returns></returns>
-        private double CalculatePrice()
+        private decimal CalculatePrice()
         {
             int numberOfToppings = 0;
-            double sizePrice = 0.0;
+            decimal sizePrice = 0.0m;
             switch (this.size)
             {
                 case 0:
-                    sizePrice = 5.99;
+                    sizePrice = 5.99m;
                     break;
                 case 1:
-                    sizePrice = 7.99;
+                    sizePrice = 7.99m;
                     break;
                 case 2:
-                    sizePrice = 9.99;
+                    sizePrice = 9.99m;
                     break;
             }
             foreach(bool choice in toppingSelection)
@@ -69,7 +69,7 @@ namespace PizzaShopUserInterface
                 }
             }
             if (numberOfToppings > 2)
-                return sizePrice + ((numberOfToppings - 2) * .50);
+                return sizePrice + ((numberOfToppings - 2) * .50m);
             else
                 return sizePrice;
         }

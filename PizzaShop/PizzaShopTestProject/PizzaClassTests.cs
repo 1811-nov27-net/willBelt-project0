@@ -12,7 +12,7 @@ namespace PizzaShopTestProject
         [InlineData(0,2,new bool[] { true, false, true, false, true, false, true}, 6.99)]
         [InlineData(1, 2, new bool[] { true, false, true, false, true, false, true }, 8.99)]
         [InlineData(2, 2, new bool[] { true, true, true, true, true, true, true }, 12.49)]
-        public void PizzasCalculatePrice(int size, int crust, bool[] toppingsSelected, double expected)
+        public void PizzasCalculatePrice(int size, int crust, bool[] toppingsSelected, decimal expected)
         {
             Dictionary<int, string> sizes = new Dictionary<int, string>
             {
@@ -44,7 +44,7 @@ namespace PizzaShopTestProject
         [InlineData(3,2,new bool[] { false, false, false, false, false, false, false}, 0.00)]
         [InlineData(1, 3, new bool[] { false, false, false, false, false, false, false }, 0.00)]
         [InlineData(2, 2, new bool[] { false, false, false, false, false, false, false, true }, 0.00)]
-        public void InvalidPizzasHaveZeroPrice(int size, int crust, bool[] toppingsSelected, double expected)
+        public void InvalidPizzasHaveZeroPrice(int size, int crust, bool[] toppingsSelected, decimal expected)
         {
             Dictionary<int, string> sizes = new Dictionary<int, string>
             {

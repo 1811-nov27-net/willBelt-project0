@@ -8,14 +8,15 @@ namespace PizzaShopUserInterface
         public UserClass customer { get; set; }
         public List<PizzaClass> pizzas = new List<PizzaClass>();
         public DateTime time { get; set; }
-        public double total { get; set; }
+        public LocationClass location { get; set; }
+        public decimal total { get; set; }
 
         public string AddPizza(PizzaClass newPizza)
         {
-            if (pizzas.Count < 12 && newPizza.price != 0.0)
+            if (pizzas.Count < 12 && newPizza.price != 0.0m)
             {
                 this.pizzas.Add(newPizza);
-                if (total + newPizza.price < 500.00)
+                if (total + newPizza.price < 500.00m)
                 {
                     total += newPizza.price;
                     return newPizza.ToString() + " has been added to your order.";

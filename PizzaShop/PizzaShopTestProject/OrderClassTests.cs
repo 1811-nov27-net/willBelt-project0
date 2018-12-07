@@ -23,7 +23,7 @@ namespace PizzaShopTestProject
         [InlineData(0, 2, new bool[] { true, false, true, false, true, false, true }, 6.99)]
         [InlineData(1, 2, new bool[] { true, false, true, false, true, false, true }, 8.99)]
         [InlineData(2, 2, new bool[] { true, true, true, true, true, true, true }, 12.49)]
-        public void OrderCalculatesPriceCorrectly(int size, int crust, bool[] toppingChoices, double expected)
+        public void OrderCalculatesPriceCorrectly(int size, int crust, bool[] toppingChoices, decimal expected)
         {
             Dictionary<int, string> sizes = new Dictionary<int, string>
             {
@@ -50,7 +50,7 @@ namespace PizzaShopTestProject
             OrderClass sut = new OrderClass();
             sut.AddPizza(new PizzaClass(sizes, crustTypes, toppings, size, crust, toppingChoices));
 
-            double actual = sut.total;
+            decimal actual = sut.total;
 
             Assert.Equal(expected, actual);
         }
@@ -60,7 +60,7 @@ namespace PizzaShopTestProject
         [InlineData(0, 2, new bool[] { true, false, true, false, true, false, true }, 13.98)]
         [InlineData(1, 2, new bool[] { true, false, true, false, true, false, true }, 17.98)]
         [InlineData(2, 2, new bool[] { true, true, true, true, true, true, true }, 24.98)]
-        public void OrderCalculatesPriceForMultiplePizzas(int size, int crust, bool[] toppingChoices, double expected)
+        public void OrderCalculatesPriceForMultiplePizzas(int size, int crust, bool[] toppingChoices, decimal expected)
         {
             Dictionary<int, string> sizes = new Dictionary<int, string>
             {
@@ -89,7 +89,7 @@ namespace PizzaShopTestProject
             sut.AddPizza(new PizzaClass(sizes, crustTypes, toppings, size, crust, toppingChoices));
             sut.AddPizza(new PizzaClass(sizes, crustTypes, toppings, size, crust, toppingChoices));
 
-            double actual = sut.total;
+            decimal actual = sut.total;
 
             Assert.Equal(expected, actual);
         }

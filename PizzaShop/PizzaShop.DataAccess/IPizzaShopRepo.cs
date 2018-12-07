@@ -10,7 +10,7 @@ namespace PizzaShop.DataAccess
         IList<LocationClass> GetAllLocations();
         IList<UserClass> GetAllUsers();
         IList<OrderClass> GetAllOrders();
-        void CreateOrder(UserClass user, LocationClass location);
+        void CreateOrder(OrderClass order);
         IList<OrderClass> GetOrdersByUser(UserClass user);
         void SaveChanges();
         void AddNewLocation(LocationClass location);

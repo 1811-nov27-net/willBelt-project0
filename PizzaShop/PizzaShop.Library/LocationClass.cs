@@ -6,15 +6,22 @@ namespace PizzaShopUserInterface
     public class LocationClass
     {
         Dictionary<int, int> inventory = new Dictionary<int, int> { {0,50}, {1,50},{2,50},{3,50}, {4,50}, {5,50}, {6,50} };
-        static Dictionary<int, string> sizes = new Dictionary<int, string> { { 0, "Small" }, { 1, "Medium" }, { 2, "Large" } };
-        static Dictionary<int, string> crustTypes = new Dictionary<int, string> { { 0, "Hand-Tossed" }, { 1, "Deep-Dish" }, { 2, "Thin Crust" } };
-        static Dictionary<int, string> toppings = new Dictionary<int, string> { { 0, "Pepperoni" }, { 1, "Canadian Bacon" }, { 2, "Sausage" }, { 3, "Mushrooms" }, { 4, "Black Olives" }, { 5, "Green Peppers" }, { 6, "Onions" } };
+        public Dictionary<int, string> sizes = new Dictionary<int, string> { { 0, "Small" }, { 1, "Medium" }, { 2, "Large" } };
+        public Dictionary<int, string> crustTypes = new Dictionary<int, string> { { 0, "Hand-Tossed" }, { 1, "Deep-Dish" }, { 2, "Thin Crust" } };
+        public Dictionary<int, string> toppings = new Dictionary<int, string> {
+            { 0, "Pepperoni" },
+            { 1, "Canadian Bacon" },
+            { 2, "Sausage" },
+            { 3, "Mushrooms" },
+            { 4, "Black Olives" },
+            { 5, "Green Peppers" },
+            { 6, "Onions" }
+        };
         public List<OrderClass> OrderHistory;
         List<string> OrderRequestStrings;
-        private bool isValidInput = false;
         private string input;
         private bool[] toppingChoices;
-        private int size, crust, inputIndex;
+        private int size, crust;
         OrderClass newOrder;
         public string LocationDescription;
 
@@ -23,6 +30,19 @@ namespace PizzaShopUserInterface
             LocationDescription = description;
             OrderHistory = history;
         }
+
+        public LocationClass(string description, List<OrderClass> history, string menu, string inventory)
+        {
+            LocationDescription = description;
+            OrderHistory = history;
+            string[] menuSubstrings = menu.Split('/');
+            BuildMenu(menuSubstrings[0], sizes);
+            BuildMenu(menuSubstrings[1], crustTypes);
+            BuildMenu(menuSubstrings[2], toppings);
+            BuildInventory(inventory);
+            
+        }
+
         public void TakeOrder(UserClass user)
         {
             newOrder = new OrderClass();
@@ -31,9 +51,7 @@ namespace PizzaShopUserInterface
             do {
                 BuildOrderRequestStrings();
                 GetSizeOrder();
-                isValidInput = false;
                 GetCrustOrder();
-                isValidInput = false;
                 GetToppigsOrder();
                 CheckInventory();
                 PizzaClass newPizza = new PizzaClass(sizes, crustTypes, toppings, size, crust, toppingChoices);
@@ -70,6 +88,7 @@ namespace PizzaShopUserInterface
         }
         private void GetSizeOrder()
         {
+            bool isValidInput = false;
             do
             {
                 Console.Write(OrderRequestStrings[0]);
@@ -83,6 +102,7 @@ namespace PizzaShopUserInterface
         }
         private void GetCrustOrder()
         {
+            bool isValidInput = false;
             do
             {
                 Console.Write(OrderRequestStrings[1]);
@@ -96,6 +116,7 @@ namespace PizzaShopUserInterface
         }
         private void GetToppigsOrder()
         {
+            bool isValidInput = false;
             toppingChoices = new bool[toppings.Count];
             bool done = false;
             do
@@ -121,6 +142,59 @@ namespace PizzaShopUserInterface
                 }
                 else if (inventory[i] == 0)
                     Console.WriteLine($"We cannot fulfill that order because we are out of {toppings[i]}");
+            }
+        }
+
+        public string GetMenu()
+        {
+            string menuString = "";
+            foreach (KeyValuePair<int, string> pair in sizes)
+            {
+                menuString += $"{pair.Value},";
+            }
+            menuString += "/";
+
+            foreach (KeyValuePair<int, string> pair in crustTypes)
+            {
+                menuString += $"{pair.Value},";
+            }
+            menuString += "/";
+
+            foreach (KeyValuePair<int, string> pair in toppings)
+            {
+                menuString += $"{pair.Value},";
+            }
+            return menuString;
+        }
+
+        public string GetInventory()
+        {
+            string inventoryString = "";
+            foreach ( KeyValuePair<int,int> pair in inventory)
+            {
+                inventoryString += $"{pair.Value},";
+            }
+            return inventoryString;
+        }
+
+        private void BuildMenu(string Substring, Dictionary<int,string> menu)
+        {
+            string[] strings = Substring.Split(',');
+            for (int i = 0; i < strings.Length; i++)
+            {
+                menu.Add(i, strings[i]);
+            }
+        }
+
+        private void BuildInventory(string Substring)
+        {
+            string[] strings = Substring.Split(',');
+            for (int i = 0; i < strings.Length; i++)
+            {
+                if (int.TryParse(strings[i], out int number))
+                    inventory.Add(i, number);
+                else
+                    Console.WriteLine("Error Building Inventory, Inventory String contains Invalid Value");
             }
         }
     }
