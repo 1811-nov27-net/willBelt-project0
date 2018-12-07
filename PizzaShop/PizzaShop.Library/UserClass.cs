@@ -4,21 +4,21 @@ using System.Text;
 
 namespace PizzaShopUserInterface
 {
-    public class User
+    public class UserClass
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Location DefaultLocation;
-        public Location location;
+        public LocationClass DefaultLocation;
+        public LocationClass location;
 
-        public User(string first, string last, Location defaultLocation)
+        public UserClass(string first, string last, LocationClass defaultLocation)
         {
             FirstName = first;
             LastName = last;
             DefaultLocation = defaultLocation;
         }
 
-        public void GetLocation(List<Location> locations)
+        public void GetLocation(List<LocationClass> locations)
         {
             bool isValidInput = false;
             string locationsString = "";

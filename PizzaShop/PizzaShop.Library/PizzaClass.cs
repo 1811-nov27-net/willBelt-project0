@@ -2,7 +2,7 @@
 
 namespace PizzaShopUserInterface
 {
-    public class Pizza
+    public class PizzaClass
     {
         Dictionary<int, string> sizes;
         Dictionary<int, string> crustTypes;

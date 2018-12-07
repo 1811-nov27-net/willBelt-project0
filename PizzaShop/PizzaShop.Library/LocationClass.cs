@@ -3,29 +3,29 @@ using System.Collections.Generic;
 
 namespace PizzaShopUserInterface
 {
-    public class Location
+    public class LocationClass
     {
         Dictionary<int, int> inventory = new Dictionary<int, int> { {0,50}, {1,50},{2,50},{3,50}, {4,50}, {5,50}, {6,50} };
         static Dictionary<int, string> sizes = new Dictionary<int, string> { { 0, "Small" }, { 1, "Medium" }, { 2, "Large" } };
         static Dictionary<int, string> crustTypes = new Dictionary<int, string> { { 0, "Hand-Tossed" }, { 1, "Deep-Dish" }, { 2, "Thin Crust" } };
         static Dictionary<int, string> toppings = new Dictionary<int, string> { { 0, "Pepperoni" }, { 1, "Canadian Bacon" }, { 2, "Sausage" }, { 3, "Mushrooms" }, { 4, "Black Olives" }, { 5, "Green Peppers" }, { 6, "Onions" } };
-        public List<Order> OrderHistory;
+        public List<OrderClass> OrderHistory;
         List<string> OrderRequestStrings;
         private bool isValidInput = false;
         private string input;
         private bool[] toppingChoices;
         private int size, crust, inputIndex;
-        Order newOrder;
+        OrderClass newOrder;
         public string LocationDescription;
 
-        public Location(string description, List<Order> history)
+        public LocationClass(string description, List<OrderClass> history)
         {
             LocationDescription = description;
             OrderHistory = history;
         }
-        public void TakeOrder(User user)
+        public void TakeOrder(UserClass user)
         {
-            newOrder = new Order();
+            newOrder = new OrderClass();
             newOrder.customer = user;
             bool OrderCompleted = false;
             do {
@@ -36,7 +36,7 @@ namespace PizzaShopUserInterface
                 isValidInput = false;
                 GetToppigsOrder();
                 CheckInventory();
-                Pizza newPizza = new Pizza(sizes, crustTypes, toppings, size, crust, toppingChoices);
+                PizzaClass newPizza = new PizzaClass(sizes, crustTypes, toppings, size, crust, toppingChoices);
                 Console.WriteLine(newOrder.AddPizza(newPizza));
                 Console.WriteLine($"Total: ${newOrder.total}");
                 Console.WriteLine("Would you like to order anything else? y/n");

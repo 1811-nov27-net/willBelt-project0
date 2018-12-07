@@ -36,7 +36,7 @@ namespace PizzaShopTestProject
                 { 5, "Green Peppers" },
                 { 6, "Onions" }
             };
-            Pizza sut = new Pizza(sizes, crustTypes, toppings, size, crust, toppingsSelected);
+            PizzaClass sut = new PizzaClass(sizes, crustTypes, toppings, size, crust, toppingsSelected);
 
             Assert.Equal(expected, sut.price);
         }
@@ -69,7 +69,7 @@ namespace PizzaShopTestProject
                 { 6, "Onions" }
             };
 
-            Pizza sut = new Pizza(sizes, crustTypes, toppings, size, crust, toppingsSelected);
+            PizzaClass sut = new PizzaClass(sizes, crustTypes, toppings, size, crust, toppingsSelected);
 
             Assert.Equal(expected, sut.price);
         }
@@ -102,7 +102,7 @@ namespace PizzaShopTestProject
                 { 5, "Green Peppers" },
                 { 6, "Onions" }
             };
-            Pizza sut = new Pizza(sizes, crustTypes, toppings, size, crust, toppingsSelected);
+            PizzaClass sut = new PizzaClass(sizes, crustTypes, toppings, size, crust, toppingsSelected);
 
             string actual = sut.ToString();
 

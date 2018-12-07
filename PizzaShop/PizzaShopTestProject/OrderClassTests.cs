@@ -11,7 +11,7 @@ namespace PizzaShopTestProject
         [Fact]
         public void DefaultOrderHasNoPizzas()
         {
-            Order sut = new Order();
+            OrderClass sut = new OrderClass();
 
             bool actual = (sut.pizzas.Count == 0);
 
@@ -47,7 +47,7 @@ namespace PizzaShopTestProject
                 { 5, "Green Peppers" },
                 { 6, "Onions" }
             };
-            Order sut = new Order();
+            OrderClass sut = new OrderClass();
             sut.AddPizza(new Pizza(sizes, crustTypes, toppings, size, crust, toppingChoices));
 
             double actual = sut.total;
@@ -85,7 +85,7 @@ namespace PizzaShopTestProject
                 { 6, "Onions" }
             };
 
-            Order sut = new Order();
+            OrderClass sut = new OrderClass();
             sut.AddPizza(new Pizza(sizes, crustTypes, toppings, size, crust, toppingChoices));
             sut.AddPizza(new Pizza(sizes, crustTypes, toppings, size, crust, toppingChoices));
 

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace PizzaShopUserInterface
 {
-    public class Order
+    public class OrderClass
     {
-        public User customer { get; set; }
-        public List<Pizza> pizzas = new List<Pizza>();
+        public UserClass customer { get; set; }
+        public List<PizzaClass> pizzas = new List<PizzaClass>();
         public DateTime time { get; set; }
         public double total { get; set; }
 
-        public string AddPizza(Pizza newPizza)
+        public string AddPizza(PizzaClass newPizza)
         {
             if (pizzas.Count < 12 && newPizza.price != 0.0)
             {

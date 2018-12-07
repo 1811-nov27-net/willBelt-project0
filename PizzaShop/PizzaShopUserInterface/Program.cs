@@ -1,23 +1,32 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using PizzaShop.DataAccess;
+using System;
 using System.Collections.Generic;
 
 namespace PizzaShopUserInterface
 {
     class Program
     {
+        static DbContextOptions<ProjectsContext> options = null;
+
         static void Main(string[] args)
         {
+            var connectionString = SecretConfiguration.ConnectionString;
+
+            var optionsBuilder = new DbContextOptionsBuilder<ProjectsContext>();
+            optionsBuilder.UseSqlServer(connectionString);
+            options = optionsBuilder.Options;
             bool done = false;
             string input;
-            List<Location> LocationList = new List<Location>
+            List<LocationClass> LocationList = new List<LocationClass>
                 {
-                new Location("This Location", new List<Order>()), new Location("That Location", new List<Order>()), new Location("The Other Location", new List<Order>())
+                new LocationClass("This Location", new List<OrderClass>()), new LocationClass("That Location", new List<OrderClass>()), new LocationClass("The Other Location", new List<OrderClass>())
                 };
             Console.WriteLine("Enter First Name:");
             string inputFirstName = Console.ReadLine();
             Console.WriteLine("Enter Last Name:");
             string inputLastName = Console.ReadLine();
-            User user = new User(inputFirstName, inputLastName, LocationList[0]);
+            UserClass user = new UserClass(inputFirstName, inputLastName, LocationList[0]);
             do
             {
 
@@ -28,10 +37,10 @@ namespace PizzaShopUserInterface
                 if (input.ToLower() == "y" || input.ToLower() == "yes")
                     done = true;
             } while (!done);
-            List < Order > list = user.location.OrderHistory;
-            foreach(Order order in list)
+            List < OrderClass > list = user.location.OrderHistory;
+            foreach(OrderClass order in list)
             {
-                foreach(Pizza pizza in order.pizzas)
+                foreach(PizzaClass pizza in order.pizzas)
                 {
                     Console.WriteLine($"{pizza.ToString()}");
                 }
