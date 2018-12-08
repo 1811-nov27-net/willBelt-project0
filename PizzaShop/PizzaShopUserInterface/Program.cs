@@ -26,7 +26,7 @@ namespace PizzaShopUserInterface
             string inputFirstName = Console.ReadLine();
             Console.WriteLine("Enter Last Name:");
             string inputLastName = Console.ReadLine();
-            UserClass user = new UserClass(inputFirstName, inputLastName, LocationList[0]);
+            UserClass user = new UserClass(0, inputFirstName, inputLastName, LocationList[0]);
             do
             {
 

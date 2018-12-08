@@ -10,6 +10,15 @@ namespace PizzaShopUserInterface
         public DateTime time { get; set; }
         public LocationClass location { get; set; }
         public decimal total { get; set; }
+        public int OrderID { get; set; }
+
+        public OrderClass(int orderID, UserClass user, LocationClass location)
+        {
+            OrderID = orderID;
+            customer = user;
+            this.location = location;
+            total = 0.0m;
+        }
 
         public string AddPizza(PizzaClass newPizza)
         {

@@ -11,7 +11,9 @@ namespace PizzaShopTestProject
         [Fact]
         public void DefaultOrderHasNoPizzas()
         {
-            OrderClass sut = new OrderClass();
+            LocationClass location = new LocationClass("Test Location", new List<OrderClass>());
+            UserClass user = new UserClass(0, "Test", "User", location);
+            OrderClass sut = new OrderClass(0, user, location);
 
             bool actual = (sut.pizzas.Count == 0);
 
@@ -47,8 +49,9 @@ namespace PizzaShopTestProject
                 { 5, "Green Peppers" },
                 { 6, "Onions" }
             };
-            OrderClass sut = new OrderClass();
-            sut.AddPizza(new PizzaClass(sizes, crustTypes, toppings, size, crust, toppingChoices));
+            LocationClass location = new LocationClass("Test Location", new List<OrderClass>());
+            UserClass user = new UserClass(0, "Test", "User", location);
+            OrderClass sut = new OrderClass(0, user, location); sut.AddPizza(new PizzaClass(sizes, crustTypes, toppings, size, crust, toppingChoices));
 
             decimal actual = sut.total;
 
@@ -85,8 +88,9 @@ namespace PizzaShopTestProject
                 { 6, "Onions" }
             };
 
-            OrderClass sut = new OrderClass();
-            sut.AddPizza(new PizzaClass(sizes, crustTypes, toppings, size, crust, toppingChoices));
+            LocationClass location = new LocationClass("Test Location", new List<OrderClass>());
+            UserClass user = new UserClass(0, "Test", "User", location);
+            OrderClass sut = new OrderClass(0, user, location); sut.AddPizza(new PizzaClass(sizes, crustTypes, toppings, size, crust, toppingChoices));
             sut.AddPizza(new PizzaClass(sizes, crustTypes, toppings, size, crust, toppingChoices));
 
             decimal actual = sut.total;

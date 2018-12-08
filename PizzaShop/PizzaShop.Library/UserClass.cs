@@ -10,9 +10,11 @@ namespace PizzaShopUserInterface
         public string LastName { get; set; }
         public LocationClass DefaultLocation;
         public LocationClass location;
+        public int UserID { get; set; }
 
-        public UserClass(string first, string last, LocationClass defaultLocation)
+        public UserClass(int userID, string first, string last, LocationClass defaultLocation)
         {
+            UserID = userID;
             FirstName = first;
             LastName = last;
             DefaultLocation = defaultLocation;

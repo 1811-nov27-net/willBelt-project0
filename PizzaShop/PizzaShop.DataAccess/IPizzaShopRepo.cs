@@ -15,5 +15,7 @@ namespace PizzaShop.DataAccess
         void SaveChanges();
         void AddNewLocation(LocationClass location);
         void AddNewUser(UserClass user);
+        bool UserIsInDB(string firstName, string lastName);
+        UserClass GetUserByName(string firstName, string lastName);
     }
 }

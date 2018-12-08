@@ -11,7 +11,7 @@ namespace PizzaShopTestProject
         [Fact]
         public void UserConstructorCreatesValidUser()
         {
-            UserClass sut = new UserClass("Will", "Belt", new LocationClass("This Location", new List<OrderClass>()));
+            UserClass sut = new UserClass(0, "Will", "Belt", new LocationClass("This Location", new List<OrderClass>()));
 
             Assert.True(sut.FirstName == "Will");
         }

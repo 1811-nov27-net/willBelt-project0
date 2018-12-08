@@ -5,9 +5,22 @@ namespace PizzaShopUserInterface
 {
     public class LocationClass
     {
-        Dictionary<int, int> inventory = new Dictionary<int, int> { {0,50}, {1,50},{2,50},{3,50}, {4,50}, {5,50}, {6,50} };
-        public Dictionary<int, string> sizes = new Dictionary<int, string> { { 0, "Small" }, { 1, "Medium" }, { 2, "Large" } };
-        public Dictionary<int, string> crustTypes = new Dictionary<int, string> { { 0, "Hand-Tossed" }, { 1, "Deep-Dish" }, { 2, "Thin Crust" } };
+        Dictionary<int, int> inventory = new Dictionary<int, int> {
+            { 0,50},
+            { 1,50},
+            { 2,50},
+            { 3,50},
+            { 4,50},
+            { 5,50},
+            { 6,50} };
+        public Dictionary<int, string> sizes = new Dictionary<int, string> {
+            { 0, "Small" },
+            { 1, "Medium" },
+            { 2, "Large" } };
+        public Dictionary<int, string> crustTypes = new Dictionary<int, string> {
+            { 0, "Hand-Tossed" },
+            { 1, "Deep-Dish" },
+            { 2, "Thin Crust" } };
         public Dictionary<int, string> toppings = new Dictionary<int, string> {
             { 0, "Pepperoni" },
             { 1, "Canadian Bacon" },
@@ -22,8 +35,8 @@ namespace PizzaShopUserInterface
         private string input;
         private bool[] toppingChoices;
         private int size, crust;
-        OrderClass newOrder;
         public string LocationDescription;
+        public int LocationID { get; set; }
 
         public LocationClass(string description, List<OrderClass> history)
         {
@@ -31,8 +44,9 @@ namespace PizzaShopUserInterface
             OrderHistory = history;
         }
 
-        public LocationClass(string description, List<OrderClass> history, string menu, string inventory)
+        public LocationClass(int locationID, string description, List<OrderClass> history, string menu, string inventory)
         {
+            LocationID = locationID;
             LocationDescription = description;
             OrderHistory = history;
             string[] menuSubstrings = menu.Split('/');
@@ -45,7 +59,7 @@ namespace PizzaShopUserInterface
 
         public void TakeOrder(UserClass user)
         {
-            newOrder = new OrderClass();
+            OrderClass newOrder = new OrderClass(0, user, this);
             newOrder.customer = user;
             bool OrderCompleted = false;
             do {
@@ -197,6 +211,7 @@ namespace PizzaShopUserInterface
 
         private void BuildMenu(string Substring, Dictionary<int,string> menu)
         {
+            menu = new Dictionary<int, string>();
             string[] strings = Substring.Split(',');
             for (int i = 0; i < strings.Length; i++)
             {
@@ -206,6 +221,7 @@ namespace PizzaShopUserInterface
 
         private void BuildInventory(string Substring)
         {
+            inventory = new Dictionary<int, int>();
             string[] strings = Substring.Split(',');
             for (int i = 0; i < strings.Length; i++)
             {
