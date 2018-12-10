@@ -28,7 +28,7 @@ namespace PizzaShop.Library
                 if (total + newPizza.price < 500.00m)
                 {
                     total += newPizza.price;
-                    return newPizza.ToString() + " has been added to your order.";
+                    return newPizza.ToString() + "\nhas been added to your order.";
                 }
                 else
                     return "New pizza not added to your order, total may not exceed $500.00";
@@ -48,7 +48,8 @@ namespace PizzaShop.Library
             {
                 orderString += $"{pizza.ToString()}\n";
             }
-            orderString += $"Total: ${total}";
+            orderString += $"Total: ${total}\n";
+            orderString += time.ToString();
             return orderString;
         }
     }

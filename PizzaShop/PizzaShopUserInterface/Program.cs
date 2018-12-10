@@ -25,10 +25,10 @@ namespace PizzaShopUserInterface
             {
                 repo = new PizzaShopRepo(db);
                 IList<LocationClass> LocationList = repo.GetAllLocations();
-                foreach (var location in LocationList)
-                {
-                    repo.BuildLocationOrderHistory(location);
-                }
+                //foreach (var location in LocationList)
+                //{
+                //    repo.BuildLocationOrderHistory(location);
+                //}
                 /*List<LocationClass> LocationList = new List<LocationClass>
                 {
                 new LocationClass("This Location", new List<OrderClass>()), new LocationClass("That Location", new List<OrderClass>()), new LocationClass("The Other Location", new List<OrderClass>())
