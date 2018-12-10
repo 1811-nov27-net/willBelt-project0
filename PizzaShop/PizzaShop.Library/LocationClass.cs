@@ -6,7 +6,7 @@ namespace PizzaShop.Library
 {
     public class LocationClass
     {
-        Dictionary<int,int> inventory = new Dictionary<int,int> {
+        public Dictionary<int,int> inventory = new Dictionary<int,int> {
             { 0,50 },
             {1, 50 },
             {2, 50 },

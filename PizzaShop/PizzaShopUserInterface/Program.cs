@@ -88,6 +88,7 @@ namespace PizzaShopUserInterface
                         user = new UserClass(0, inputFirstName, inputLastName, LocationList[0]);
                         repo.AddNewUser(user);
                         repo.SaveChanges();
+                        user = repo.GetUserByName(user.FirstName, user.LastName);
                     }
                     do
                     {

@@ -19,5 +19,6 @@ namespace PizzaShop.DataAccess
         UserClass GetUserByName(string firstName, string lastName);
         void BuildLocationOrderHistory(LocationClass location);
         void UpdateLocation(LocationClass location);
+        LocationClass GetLocationByDescription(string description);
     }
 }

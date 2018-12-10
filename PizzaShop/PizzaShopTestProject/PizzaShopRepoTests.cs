@@ -278,5 +278,47 @@ namespace PizzaShopTestProject
                 Assert.True(actual);
             }
         }
+
+        [Fact]
+        public void GetLocationByDescriptionWorks()
+        {
+            var options = new DbContextOptionsBuilder<ProjectsContext>()
+                .UseInMemoryDatabase("get_location_by_description_test").Options;
+            using (var db = new ProjectsContext(options))
+            {
+                IPizzaShopRepo sut = new PizzaShopRepo(db);
+                LocationClass location = new LocationClass("Test Location", new List<OrderClass>());
+                sut.AddNewLocation(location);
+                sut.SaveChanges();
+                location = sut.GetLocationByDescription(location.LocationDescription);
+
+                bool actual = location.LocationDescription == "Test Location" && location.LocationID != 0;
+
+                Assert.True(actual);
+            }
+        }
+
+        [Fact]
+        public void UpdateLocationWorks()
+        {
+            var options = new DbContextOptionsBuilder<ProjectsContext>()
+                .UseInMemoryDatabase("update_location_test").Options;
+            using (var db = new ProjectsContext(options))
+            {
+                IPizzaShopRepo sut = new PizzaShopRepo(db);
+                LocationClass location = new LocationClass("Test Location", new List<OrderClass>());
+                sut.AddNewLocation(location);
+                sut.SaveChanges();
+                location = sut.GetLocationByDescription(location.LocationDescription);
+                location.inventory[0] = 100;
+                sut.UpdateLocation(location);
+                sut.SaveChanges();
+                IList<LocationClass> list = sut.GetAllLocations();
+
+                bool actual = list.First(l => l.LocationDescription == location.LocationDescription).inventory[0] == 100;
+
+                Assert.True(actual);
+            }
+        }
     }
 }

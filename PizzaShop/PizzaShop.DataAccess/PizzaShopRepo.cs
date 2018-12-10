@@ -190,5 +190,12 @@ namespace PizzaShop.DataAccess
             trackedLocation.Menu = location.GetMenu();
             db.Locations.Update(trackedLocation);
         }
+
+        public LocationClass GetLocationByDescription(string description)
+        {
+            LocationClass location = BuildLocationFromDBLocations(db.Locations.First(l => l.LocationDescription == description));
+            BuildLocationOrderHistory(location);
+            return location;
+        }
     }
 }
