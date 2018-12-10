@@ -63,8 +63,8 @@ namespace PizzaShop.Library
             OrderClass newOrder = new OrderClass(0, user, this);
             newOrder.customer = user;
             IList<OrderClass> customerHistory = OrderHistory.FindAll(o => o.customer.UserID == user.UserID);
-            customerHistory.OrderByDescending(o => o.time);
-            if (customerHistory.Count == 0 || TimeCheck(customerHistory[0].time))
+            //customerHistory.OrderBy(o => o.time);
+            if (customerHistory.Count == 0 || TimeCheck(customerHistory.OrderByDescending(o => o.time).First().time))
             {
                 if (customerHistory.Count > 0 && SuggestFromHistory(customerHistory))
                     newOrder = customerHistory[0];
@@ -260,8 +260,8 @@ namespace PizzaShop.Library
 
         private bool SuggestFromHistory(IList<OrderClass> orders)
         {
-            var order = orders.GroupBy(o => o.pizzas).Max();
-            Console.WriteLine($"Would you like to reorder your previous?(y/n)\n{order}");
+            var order = orders.GroupBy(o => o.total).First();
+            Console.WriteLine($"Would you like to reorder your previous order?(y/n)\n{order.First().ToString()}");
             string input = Console.ReadLine();
             if (input.ToLower() == "y" || input.ToLower() == "yes")
                 return true;

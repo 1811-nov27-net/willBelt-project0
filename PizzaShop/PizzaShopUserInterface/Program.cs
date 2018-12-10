@@ -25,14 +25,6 @@ namespace PizzaShopUserInterface
             {
                 repo = new PizzaShopRepo(db);
                 IList<LocationClass> LocationList = repo.GetAllLocations();
-                //foreach (var location in LocationList)
-                //{
-                //    repo.BuildLocationOrderHistory(location);
-                //}
-                /*List<LocationClass> LocationList = new List<LocationClass>
-                {
-                new LocationClass("This Location", new List<OrderClass>()), new LocationClass("That Location", new List<OrderClass>()), new LocationClass("The Other Location", new List<OrderClass>())
-                };*/
                 UserClass user;
                 Console.WriteLine("Enter First Name:");
                 string inputFirstName = Console.ReadLine();
@@ -96,6 +88,7 @@ namespace PizzaShopUserInterface
                         user.GetLocation(LocationList);
                         repo.UpdateUser(user);
                         repo.SaveChanges();
+                        repo.BuildLocationOrderHistory(user.location);
                         var order = user.location.TakeOrder(user);
                         if (order != null)
                         {
@@ -109,15 +102,6 @@ namespace PizzaShopUserInterface
                             done = true;
                     } while (!done);
                 }
-                //List<OrderClass> list = user.location.OrderHistory;
-                //foreach (OrderClass order in list)
-                //{
-                //    foreach (PizzaClass pizza in order.pizzas)
-                //    {
-                //        Console.WriteLine($"{pizza.ToString()}");
-                //    }
-                //    Console.WriteLine($"Total: ${order.total}");
-                //}
             }
         }
 
