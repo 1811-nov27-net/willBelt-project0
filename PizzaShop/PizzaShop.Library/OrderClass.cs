@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PizzaShopUserInterface
+namespace PizzaShop.Library
 {
     public class OrderClass
     {
@@ -39,6 +39,17 @@ namespace PizzaShopUserInterface
             }
             else
                 return "Invalid Selection, please try again.";
+        }
+
+        public override string ToString()
+        {
+            var orderString = $"Customer: {customer.FirstName} {customer.LastName}\n";
+            foreach (var pizza in pizzas)
+            {
+                orderString += $"{pizza.ToString()}\n";
+            }
+            orderString += $"Total: ${total}";
+            return orderString;
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-using PizzaShopUserInterface;
+using PizzaShop.Library;
 
 namespace PizzaShop.DataAccess
 {
@@ -128,7 +128,7 @@ namespace PizzaShop.DataAccess
             return new LocationClass(location.LocationId, location.LocationDescription, history, location.Menu, location.Inventory);
         }
 
-        private void BuildLocationOrderHistory(LocationClass location)
+        public void BuildLocationOrderHistory(LocationClass location)
         {
             foreach (var order in db.Orders.Where(o => o.LocationId == location.LocationID).ToList())
             {
@@ -181,6 +181,14 @@ namespace PizzaShop.DataAccess
                 BuildLocationFromDBLocations(db.Locations.Find(user.DefaultLocation))
                 );
 
+        }
+
+        public void UpdateLocation(LocationClass location)
+        {
+            var trackedLocation = db.Locations.Find(location.LocationID);
+            trackedLocation.Inventory = location.GetInventory();
+            trackedLocation.Menu = location.GetMenu();
+            db.Locations.Update(trackedLocation);
         }
     }
 }

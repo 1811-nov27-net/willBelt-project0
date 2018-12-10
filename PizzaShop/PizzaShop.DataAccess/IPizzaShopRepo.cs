@@ -1,4 +1,4 @@
-﻿using PizzaShopUserInterface;
+﻿using PizzaShop.Library;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,5 +17,7 @@ namespace PizzaShop.DataAccess
         void AddNewUser(UserClass user);
         bool UserIsInDB(string firstName, string lastName);
         UserClass GetUserByName(string firstName, string lastName);
+        void BuildLocationOrderHistory(LocationClass location);
+        void UpdateLocation(LocationClass location);
     }
 }

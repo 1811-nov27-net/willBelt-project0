@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace PizzaShopUserInterface
+namespace PizzaShop.Library
 {
     public class LocationClass
     {
-        Dictionary<int, int> inventory = new Dictionary<int, int> {
-            { 0,50},
-            { 1,50},
-            { 2,50},
-            { 3,50},
-            { 4,50},
-            { 5,50},
-            { 6,50} };
+        Dictionary<int,int> inventory = new Dictionary<int,int> {
+            { 0,50 },
+            {1, 50 },
+            {2, 50 },
+            {3, 50 },
+            {4, 50 },
+            {5, 50 },
+            {6, 50 } };
         public Dictionary<int, string> sizes = new Dictionary<int, string> {
             { 0, "Small" },
             { 1, "Medium" },
@@ -57,28 +58,45 @@ namespace PizzaShopUserInterface
             
         }
 
-        public void TakeOrder(UserClass user)
+        public OrderClass TakeOrder(UserClass user)
         {
             OrderClass newOrder = new OrderClass(0, user, this);
             newOrder.customer = user;
-            bool OrderCompleted = false;
-            do {
-                BuildOrderRequestStrings();
-                GetSizeOrder();
-                GetCrustOrder();
-                GetToppigsOrder();
-                CheckInventory();
-                PizzaClass newPizza = new PizzaClass(sizes, crustTypes, toppings, size, crust, toppingChoices);
-                Console.WriteLine(newOrder.AddPizza(newPizza));
-                Console.WriteLine($"Total: ${newOrder.total}");
-                Console.WriteLine("Would you like to order anything else? y/n");
-                input = Console.ReadLine();
-                if (input.ToLower() == "n" || input.ToLower() == "no")
-                    OrderCompleted = true;
+            IList<OrderClass> customerHistory = OrderHistory.FindAll(o => o.customer.UserID == user.UserID);
+            customerHistory.OrderByDescending(o => o.time);
+            if (TimeCheck(customerHistory[0].time))
+            {
+                if (SuggestFromHistory(customerHistory))
+                    newOrder = customerHistory[0];
+                else
+                {
+                    bool OrderCompleted = false;
+                    do
+                    {
+                        BuildOrderRequestStrings();
+                        GetSizeOrder();
+                        GetCrustOrder();
+                        GetToppigsOrder();
+                        CheckInventory();
+                        PizzaClass newPizza = new PizzaClass(sizes, crustTypes, toppings, size, crust, toppingChoices);
+                        Console.WriteLine(newOrder.AddPizza(newPizza));
+                        Console.WriteLine($"Total: ${newOrder.total}");
+                        Console.WriteLine("Would you like to order anything else? y/n");
+                        input = Console.ReadLine();
+                        if (input.ToLower() == "n" || input.ToLower() == "no")
+                            OrderCompleted = true;
 
-            } while (!OrderCompleted);
-            newOrder.time = DateTime.Now;
-            OrderHistory.Add(newOrder);
+                    } while (!OrderCompleted);
+                }
+                newOrder.time = DateTime.Now;
+                OrderHistory.Add(newOrder);
+                return newOrder;
+            }
+            else
+            {
+                Console.WriteLine("You must wait at least 2 hours before placing another order to this location");
+                return null;
+            }
         }
 
         private void BuildOrderRequestStrings()
@@ -229,6 +247,41 @@ namespace PizzaShopUserInterface
                     inventory.Add(i, number);
                 else
                     Console.WriteLine("Error Building Inventory, Inventory String contains Invalid Value");
+            }
+        }
+
+        public bool TimeCheck(DateTime time)
+        {
+            if (DateTime.Now.Subtract(time).TotalHours > 2)
+                return true;
+            else
+                return false;
+        }
+
+        private bool SuggestFromHistory(IList<OrderClass> orders)
+        {
+            var order = orders.GroupBy(o => o.pizzas).Max();
+            Console.WriteLine($"Would you like to reorder your previous?(y/n)\n{order}");
+            string input = Console.ReadLine();
+            if (input.ToLower() == "y" || input.ToLower() == "yes")
+                return true;
+            else
+                return false;
+        }
+
+        public void RestockInventory()
+        {
+            for(int i = 0; i < inventory.Count; i++)
+            {
+                inventory[i] = 50;
+            }
+        }
+
+        public void ShowOrderHistory()
+        {
+            foreach (var order in OrderHistory)
+            {
+                Console.Write($"{order.ToString()}\n\n");
             }
         }
     }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PizzaShopUserInterface
+namespace PizzaShop.Library
 {
     public class PizzaClass
     {

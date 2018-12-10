@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PizzaShopUserInterface
+namespace PizzaShop.Library
 {
     public class UserClass
     {
@@ -20,7 +20,7 @@ namespace PizzaShopUserInterface
             DefaultLocation = defaultLocation;
         }
 
-        public void GetLocation(List<LocationClass> locations)
+        public void GetLocation(IList<LocationClass> locations)
         {
             bool isValidInput = false;
             string locationsString = "";
