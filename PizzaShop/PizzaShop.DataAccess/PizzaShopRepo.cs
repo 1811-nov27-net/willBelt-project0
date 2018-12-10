@@ -197,5 +197,12 @@ namespace PizzaShop.DataAccess
             BuildLocationOrderHistory(location);
             return location;
         }
+
+        public void UpdateUser(UserClass user)
+        {
+            var trackedUser = db.Users.Find(user.UserID);
+            trackedUser.DefaultLocation = user.DefaultLocation.LocationID;
+            db.Users.Update(trackedUser);
+        }
     }
 }

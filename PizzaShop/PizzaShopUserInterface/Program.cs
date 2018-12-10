@@ -92,12 +92,15 @@ namespace PizzaShopUserInterface
                     }
                     do
                     {
-
+                        
                         user.GetLocation(LocationList);
+                        repo.UpdateUser(user);
+                        repo.SaveChanges();
                         var order = user.location.TakeOrder(user);
                         if (order != null)
                         {
                             repo.CreateOrder(order);
+                            repo.UpdateLocation(user.location);
                             repo.SaveChanges();
                         }
                         Console.WriteLine("Done?(y/n)");

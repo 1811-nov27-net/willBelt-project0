@@ -64,9 +64,9 @@ namespace PizzaShop.Library
             newOrder.customer = user;
             IList<OrderClass> customerHistory = OrderHistory.FindAll(o => o.customer.UserID == user.UserID);
             customerHistory.OrderByDescending(o => o.time);
-            if (TimeCheck(customerHistory[0].time))
+            if (customerHistory.Count == 0 || TimeCheck(customerHistory[0].time))
             {
-                if (SuggestFromHistory(customerHistory))
+                if (customerHistory.Count > 0 && SuggestFromHistory(customerHistory))
                     newOrder = customerHistory[0];
                 else
                 {

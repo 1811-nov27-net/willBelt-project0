@@ -44,7 +44,13 @@ namespace PizzaShop.Library
                     input = Console.ReadLine();
                     isValidInput = (int.TryParse(input, out int number) && number - 1 > -1 && number - 1 < locations.Count);
                     if (isValidInput)
-                        location = locations[number-1];
+                    {
+                        location = locations[number - 1];
+                        Console.WriteLine("Would you like to set this as your default location? (y/n)");
+                        input = Console.ReadLine();
+                        if (input.ToLower() == "y" || input.ToLower() == "yes")
+                            DefaultLocation = location;
+                    }
                     else
                         Console.WriteLine("Invalid entry, please enter the number of your selection");
                 }

@@ -80,3 +80,5 @@ SELECT * FROM project0.Users;
 
 --ALTER TABLE project0.Orders
 --	ADD OrderDescription NVARCHAR(100) NOT NULL;
+
+SELECT * FROM project0.Orders
