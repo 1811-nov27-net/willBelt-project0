@@ -44,11 +44,12 @@ namespace PizzaShop.Library
         /// <summary>
         /// method that calculates the price of the individual pizza
         /// </summary>
-        /// <returns></returns>
+        /// <returns>price of the pizza as a decimal value</returns>
         private decimal CalculatePrice()
         {
             int numberOfToppings = 0;
             decimal sizePrice = 0.0m;
+            //determine base price from size
             switch (this.size)
             {
                 case 0:
@@ -68,6 +69,7 @@ namespace PizzaShop.Library
                     numberOfToppings++;
                 }
             }
+            //determine how much to add to base price for selected toppings
             if (numberOfToppings > 2)
                 return sizePrice + ((numberOfToppings - 2) * .50m);
             else
@@ -82,6 +84,7 @@ namespace PizzaShop.Library
             List<string> toppingsList = new List<string>();
             string toppingsString = "";
             bool noToppings = true;
+            //iterate through toppingSelection to determine which toppings to add to toppingsList and do so
             for (int i = 0; i < toppingSelection.Length; i++)
             {
                 if (toppingSelection[i])
@@ -90,6 +93,7 @@ namespace PizzaShop.Library
                     noToppings = false;
                 }   
             }
+            //iterate through toppings list to build string describing topping selections
             for(int i = 0; i < toppingsList.Count; i++)
             {
                 toppingsString += toppingsList[i];
@@ -98,8 +102,10 @@ namespace PizzaShop.Library
                 else if (i + 1 == toppingsList.Count - 1)
                     toppingsString += ", and ";
             }
+            //if no toppings selected, indicate as much
             if (noToppings)
                 toppingsString = "no toppings";
+            //return string describing the pizza and specifiying price
             return ($"{sizes[size]} {crustTypes[crustSelection]} pizza with {toppingsString}: ${price}");
         }
     }

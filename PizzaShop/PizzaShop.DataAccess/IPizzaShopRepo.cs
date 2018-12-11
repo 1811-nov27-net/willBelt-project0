@@ -5,6 +5,9 @@ using System.Text;
 
 namespace PizzaShop.DataAccess
 {
+    /// <summary>
+    /// PizzaShopRepo Interface
+    /// </summary>
     public interface IPizzaShopRepo
     {
         IList<LocationClass> GetAllLocations();
