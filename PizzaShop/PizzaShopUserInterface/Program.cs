@@ -18,6 +18,7 @@ namespace PizzaShopUserInterface
             optionsBuilder.UseSqlServer(connectionString);
             options = optionsBuilder.Options;
             //declare some necessary variables
+            string adminPassword = SecretConfiguration.Password;
             bool done = false;
             string input;
             IPizzaShopRepo repo;
@@ -37,13 +38,39 @@ namespace PizzaShopUserInterface
                 if (inputFirstName.ToLower() == "admin")
                 {
                     Console.WriteLine("Password:");
-                    string password = Console.ReadLine();
-                    if (password == "password123")
+                    string password = "";
+                    //more complex input code to mask password entry
+                    do
+                    {
+                        //get input one key at a time
+                        ConsoleKeyInfo key = Console.ReadKey(true);
+                        //if the key was not backspace or enter, print an asterisk
+                        if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                        {
+                            password += key.KeyChar;
+                            Console.Write("*");
+                        }
+                        else
+                        {
+                            //if it was backspace, delete last character from input string and remove one asterisk 
+                            if (key.Key == ConsoleKey.Backspace && password.Length > 0)
+                            {
+                                password = password.Substring(0, (password.Length - 1));
+                                Console.Write("\b \b");
+                            }
+                            //if it was enter, password enty is complete
+                            else if (key.Key == ConsoleKey.Enter)
+                            {
+                                break;
+                            }
+                        }
+                    } while (true);
+                        if (password == adminPassword)
                     {
                         do
                         {
                             //ask user what admin functions they want
-                            Console.Write("What Admin fuction do you wish to use?\n1. Open New Location\n2. Restock Location Inventory\n3. Show Order History for Location\n4. Add Topping to Location Menu\n5. Remove Topping from Location Menu\n");
+                            Console.Write("\nWhat Admin fuction do you wish to use?\n1. Open New Location\n2. Restock Location Inventory\n3. Show Order History for Location\n4. Add Topping to Location Menu\n5. Remove Topping from Location Menu\n");
                             input = Console.ReadLine();
                             //parse user input
                             if (int.TryParse(input, out int number) && number > 0 && number < 6)

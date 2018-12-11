@@ -91,8 +91,8 @@ namespace PizzaShop.Library
             if (customerHistory.Count == 0 || TimeCheck(customerHistory.OrderByDescending(o => o.time).First().time))
             {
                 //make suggestion to user based on order history
-                if (customerHistory.Count > 0 && SuggestFromHistory(customerHistory, newOrder))
-                    
+                if (customerHistory.Count > 0 && SuggestFromHistory(customerHistory, newOrder));
+
                 else
                 {
                     //Ask user to define what kind of pizza they want to order
