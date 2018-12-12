@@ -73,7 +73,7 @@ namespace PizzaShop.Library
                 }
                 else
                     //ask user for valid input
-                    Console.WriteLine("Invalid entry, please enter the number of your selection");
+                    Console.WriteLine("Invalid entry, please enter yes or no");
             } while (!isValidInput);
         }
     }

@@ -96,7 +96,7 @@ namespace PizzaShop.Library
                 else
                 {
                     //Ask user to define what kind of pizza they want to order
-                    bool OrderCompleted = false;
+                    bool OrderCompleted = true;
                     do
                     {
                         //build strings to print to console to ask user for order input
@@ -118,7 +118,9 @@ namespace PizzaShop.Library
                         //ask user if they want to order any additional pizzas
                         Console.WriteLine("Would you like to order anything else? y/n");
                         input = Console.ReadLine();
-                        if (input.ToLower() == "n" || input.ToLower() == "no")
+                        if (input.ToLower() == "y" || input.ToLower() == "yes")
+                            OrderCompleted = false;
+                        else
                             OrderCompleted = true;
 
                     } while (!OrderCompleted);
@@ -463,6 +465,22 @@ namespace PizzaShop.Library
             {
                 inventory[number - 1] = -1;
             }
+        }
+        /// <summary>
+        /// Method that displays locations inventory
+        /// </summary>
+        public void ShowInventory()
+        {
+            string inventoryString = "";
+            for (int i = 0; i < toppings.Count; i++)
+            {
+                //check if topping has been removed from menu
+                if (inventory[i] != -1)
+                {
+                    inventoryString += $"{toppings[i]}: {inventory[i]}\n";
+                }
+            }
+            Console.Write(inventoryString);
         }
     }
 }

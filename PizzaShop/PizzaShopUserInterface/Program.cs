@@ -19,7 +19,7 @@ namespace PizzaShopUserInterface
             options = optionsBuilder.Options;
             //declare some necessary variables
             string adminPassword = SecretConfiguration.Password;
-            bool done = false;
+            bool done = true;
             string input;
             IPizzaShopRepo repo;
             //create dbcontext object
@@ -70,10 +70,10 @@ namespace PizzaShopUserInterface
                         do
                         {
                             //ask user what admin functions they want
-                            Console.Write("\nWhat Admin fuction do you wish to use?\n1. Open New Location\n2. Restock Location Inventory\n3. Show Order History for Location\n4. Add Topping to Location Menu\n5. Remove Topping from Location Menu\n");
+                            Console.Write("\nWhat Admin fuction do you wish to use?\n1. Open New Location\n2. View Location Inventory\n3. Restock Location Inventory\n4. Show Order History for Location\n5. Add Topping to Location Menu\n6. Remove Topping from Location Menu\n");
                             input = Console.ReadLine();
                             //parse user input
-                            if (int.TryParse(input, out int number) && number > 0 && number < 6)
+                            if (int.TryParse(input, out int number) && number > 0 && number < 7)
                             {
                                 switch (number)
                                 {
@@ -84,18 +84,21 @@ namespace PizzaShopUserInterface
                                         LocationList = repo.GetAllLocations();
                                         break;
                                     case 2:
+                                        ShowLocationInventory(LocationList);
+                                        break;
+                                    case 3:
                                         //call RestockInventory method
                                         RestockInventory(repo, LocationList);
                                         break;
-                                    case 3:
+                                    case 4:
                                         //Call ShowLocationHistory method
                                         ShowLocationHistory(LocationList);
                                         break;
-                                    case 4:
+                                    case 5:
                                         //call AddToppingToLocation method
                                         AddToppingToLocationMenu(repo, LocationList);
                                         break;
-                                    case 5:
+                                    case 6:
                                         //call RemoveToppingFromLocation method
                                         RemoveToppingFromLocationMenu(repo, LocationList);
                                         break;
@@ -109,7 +112,9 @@ namespace PizzaShopUserInterface
                             //ask user if they are done
                             Console.WriteLine("Done?(y/n)");
                             input = Console.ReadLine();
-                            if (input.ToLower() == "y" || input.ToLower() == "yes")
+                            if (input.ToLower() == "n" || input.ToLower() == "no")
+                                done = false;
+                            else
                                 done = true;
                             } while (!done);
                     }
@@ -152,7 +157,9 @@ namespace PizzaShopUserInterface
                         //ask user if they are done
                         Console.WriteLine("Done?(y/n)");
                         input = Console.ReadLine();
-                        if (input.ToLower() == "y" || input.ToLower() == "yes")
+                        if (input.ToLower() == "n" || input.ToLower() == "no")
+                            done = false;
+                        else
                             done = true;
                     } while (!done);
                 }
@@ -257,6 +264,24 @@ namespace PizzaShopUserInterface
             //update locations database entry
             repo.UpdateLocation(list[number - 1]);
             repo.SaveChanges();
+        }
+        /// <summary>
+        /// Method to display Inventory for a location
+        /// </summary>
+        public static void ShowLocationInventory(IList<LocationClass> list)
+        {
+            //ask user to specify location
+            Console.WriteLine("For which Location Would you like to View Inventory?");
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {list[i].LocationDescription}");
+            }
+            string input = Console.ReadLine();
+            //parse user input and call locations RemoveToppingFromMenu method
+            if (int.TryParse(input, out int number) && number > 0 && number <= list.Count)
+            {
+                list[number - 1].ShowInventory();
+            }
         }
     }
 }

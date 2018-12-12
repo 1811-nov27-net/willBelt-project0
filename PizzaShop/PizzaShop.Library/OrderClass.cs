@@ -62,7 +62,7 @@ namespace PizzaShop.Library
         public override string ToString()
         {
             //declare orderString and instantiateit with users name and location desription
-            var orderString = $"Customer: {customer.FirstName} {customer.LastName}\nLocation: {location.LocationDescription}";
+            var orderString = $"Customer: {customer.FirstName} {customer.LastName}\nLocation: {location.LocationDescription}\n";
             //iterate through pizzas list and call each pizzas ToString method and add that string to the order string
             foreach (var pizza in pizzas)
             {
