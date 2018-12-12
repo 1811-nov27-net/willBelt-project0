@@ -68,12 +68,11 @@ INSERT INTO project0.Locations (LocationDescription, Menu, Inventory) VALUES
 INSERT INTO project0.Locations (LocationDescription, Menu, Inventory) VALUES
 	('Meyerland', 'Small,Medium,Large/Hand Tossed,Thin Crust,Deep-Dish/Pepperoni,Canadian Bacon,Sausage,Mushrooms,Black Olives,Green Peppers,Onions', '50,50,50,50,50,50,50');
 
-SELECT * FROM project0.Locations;
 
 INSERT INTO project0.Users (FirstName, LastName, DefaultLocation) VALUES
 	('Will', 'Belt', (SELECT LocationID FROM project0.Locations WHERE LocationDescription = 'Galleria'));
 
-SELECT * FROM project0.Users;
+
 
 --ALTER TABLE project0.Orders
 --	DROP COLUMN OrderDescription;
@@ -82,3 +81,7 @@ SELECT * FROM project0.Users;
 --	ADD OrderDescription NVARCHAR(100) NOT NULL;
 
 SELECT * FROM project0.Orders
+
+SELECT * FROM project0.Users;
+
+SELECT * FROM project0.Locations;
